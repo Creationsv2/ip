@@ -7,6 +7,7 @@ import duke.parser.Parser;
 import duke.parser.Parser.Command;
 import duke.storage.Storage;
 import duke.tasklist.TaskList;
+import duke.ui.Ui;
 
 /**
  * A chatbot with functionality to add or remove different
@@ -17,6 +18,8 @@ public class Duke {
     private Storage storage;
     /** Task list with operations */
     private TaskList tasks;
+    /** Deals with interactions */
+    private Ui ui;
 
     /**
      * Constructor for the Duke class.
@@ -24,6 +27,7 @@ public class Duke {
      * @param filePath The location to load or save data from/to.
      */
     public Duke(String filePath) {
+        ui = new Ui();
         storage = new Storage(filePath);
         tasks = new TaskList(storage.load());
     }
@@ -42,7 +46,6 @@ public class Duke {
      */
     public String run(String input) {
         Command inputType = Parser.parse(input);
-        assert inputType != null : "inputType should be known";
         String output;
         try {
             switch (inputType) {
